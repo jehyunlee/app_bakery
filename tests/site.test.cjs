@@ -10,6 +10,8 @@ test('canonical address and install manifest remain within the new app path', ()
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'manifest.webmanifest')));
   assert.equal(manifest.start_url, './');
   assert.equal(manifest.scope, './');
+  assert.equal(new URL(manifest.start_url, 'https://app.jehyunlee.dev/bakery/manifest.webmanifest').href, 'https://app.jehyunlee.dev/bakery/');
+  assert.equal(new URL(manifest.scope, 'https://app.jehyunlee.dev/bakery/manifest.webmanifest').href, 'https://app.jehyunlee.dev/bakery/');
   for (const [, url] of html.matchAll(/(?:src|href)="([^"]+)"/g)) {
     if (/^(https:|data:|#)/.test(url)) continue;
     assert.equal(url.startsWith('/'), false, url);
